@@ -1,0 +1,15 @@
+{
+  "miniProgram":{
+    "appid":"wxb35ee9b0467c0666",
+    "secret": "a01aa5cbc4715b1f54381f912af7fc84",
+    "grant_type": "authorization_code"
+  },
+  "qiniu":{
+    "AK": "UFmgpsHCF5goS2eEk3-CYiTHiF6KOqCqsi4C2R8Y",
+    "SK": "40HFTpsLjHpZ-7udjoRbqI-zkiLTIrcf1jJGvAQ8",
+    "bucket": "beautiful",
+    "base_url": "http://xcximg.7diary.com/",
+    "callbackUrl": "",
+    "img_fops": ""
+  }
+}
