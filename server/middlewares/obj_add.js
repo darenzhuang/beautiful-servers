@@ -7,11 +7,12 @@
  * 处理koa-better-body 返回undefined 情况
  */
 module.exports = async(ctx, next) => {
+    const _ = require('lodash');
 
     try {
         ctx.reqbody = ctx.request.body || {};      //  if buffer or text
         ctx.files = ctx.request.files || {};    //  if multipart or urlencoded
-        ctx.fields = ctx.request.fields || {};  //  if json
+        ctx.fields = _.merge({}, ctx.request.fields, ctx.request.query);  //  if json
         await next();
     } catch (e) {
         ctx.status = 500;

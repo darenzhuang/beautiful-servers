@@ -13,7 +13,7 @@ const Mongo = global.mongoDb.models,
   myCrypto = require('../lib/crypto'),
   qs = require('querystring'),
   axios = require('axios');
-const LIMIT = 50, SKIP = 0;
+const LIMIT = 20, SKIP = 0;
 
 var action = {};
 
@@ -106,7 +106,7 @@ action.saveShare = async (ctx) => {
 action.findShare = async (ctx) => {
     try {
         //接收参数
-        let fields = ctx.query;
+        let fields = ctx.fields;
         let {_id} = fields;
 
         //验证参数
@@ -115,6 +115,60 @@ action.findShare = async (ctx) => {
         //逻辑
         let shareInfo = await Mongo.Share.findOne({_id: _id},{openId: 0});
         return ctx.body = shareInfo;
+    } catch (e) {
+        ctx.status = 400;
+        return ctx.body = e.message
+    }
+};
+action.randomShare = async (ctx) => {
+    try {
+        //接收参数
+        let fields = ctx.fields;
+        let {openId} = fields;
+
+        //验证参数
+
+        //逻辑
+        let shareInfo = await Mongo.Share.aggregate([{$sample:{size:1}},{$match:{openId: {$ne:openId}}}]);
+        return ctx.body = shareInfo[0];
+    } catch (e) {
+        ctx.status = 400;
+        return ctx.body = e.message
+    }
+};
+action.myShareList = async (ctx) => {
+    try {
+        //接收参数
+        let fields = ctx.fields;
+        let {skip, openId, limit} = fields;
+
+        //验证参数
+        limit || (limit = LIMIT);
+        skip || (skip = SKIP);
+        ck.params(fields, ['skip', 'openId']);
+
+        //逻辑
+        let myShareList = await Mongo.Share.find({openId: openId}, {openId: 0}).limit(+limit).skip(+skip).sort({'_id': -1});
+        return ctx.body = myShareList;
+    } catch (e) {
+        ctx.status = 400;
+        return ctx.body = e.message
+    }
+};
+action.shareList = async (ctx) => {
+    try {
+        //接收参数
+        let fields = ctx.query;
+        let {limit} = fields;
+
+
+        //验证参数
+        limit || (limit = LIMIT);
+        ck.params(fields, []);
+
+        //逻辑
+        let shareList = await Mongo.Share.aggregate([{$sample:{size:+limit}}])
+        return ctx.body = shareList;
     } catch (e) {
         ctx.status = 400;
         return ctx.body = e.message

@@ -17,6 +17,7 @@ module.exports = async (ctx, next) => {
         let route = ctx.originalUrl;
         let reg = /\/auth_/;
         if(reg.test(route)){
+            let field  = ctx.query;
             let fields = ctx.fields;
             let {sessionId} = fields;
             if(!sessionId){

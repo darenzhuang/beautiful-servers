@@ -13,8 +13,12 @@ router.get('/getPoetry', action.getPoetry);
 router.post('/savePoetry', action.savePoetry);
 router.post('/auth_saveShare', action.saveShare);
 router.get('/findShare', action.findShare);
+router.get('/shareList', action.shareList);
+router.get('/auth_randomShare', action.randomShare);
+router.get('/auth_myShareList', action.myShareList);
 router.post('/auth_saveComment', action.saveComment);
 router.get('/commentList', action.commentList);
+
 
 router.get('/pure_getUpToken', upload.getToken);
 

@@ -30,10 +30,7 @@ const configure = function () {
         qiniu:{
             AK: 'UFmgps',
             SK: '40HFTp',
-            bucket: 'beautiful',
-            base_url: 'http://orio7s3pp.bkt.clouddn.com/',
-            callbackUrl: 'dev.kmlab.com/motiAdmin/o/upload/uploadCallback',
-            img_fops: '!3x.half'
+            bucket: 'beautiful'
         },
         path: {
             log_path: path.resolve(process.cwd(), 'logs'),
